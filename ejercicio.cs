@@ -19,19 +19,52 @@ while (!salir)
     switch (opcion)
     {
         case "1":
+            bool existe = false;
+
             if (!Directory.Exists(@"Datos"))
             {
                 Directory.CreateDirectory(@"Datos");
             }
             
-            Console.WriteLine("Indique el nombre del fichero:");
-            nombreFichero = Console.ReadLine();
+            while (!existe)
+            {
+                Console.WriteLine("Indique el nombre del fichero:");
+                nombreFichero = Console.ReadLine();
 
-            File.Create(@"Datos\" + nombreFichero + ".txt").Close();
+                if (!File.Exists(@"Datos\" + nombreFichero + ".txt"))
+                {
+                    File.Create(@"Datos\" + nombreFichero + ".txt").Close();
+                    Console.WriteLine();
+                    Console.WriteLine("¡¡Fichero creado correctamente!!");
 
-            Console.WriteLine();
-            Console.WriteLine("¡¡Fichero creado correctamente!!");
+                    break;
+                } 
 
+                existe = true;
+                
+                Console.WriteLine("¡¡Nombre de archivo ya existente!!");
+                Console.WriteLine();
+                Console.WriteLine("¿Te gustaría indicar otro nombre?");
+                Console.WriteLine("1. SÍ");
+                Console.WriteLine("2. NO");
+                
+                opcion = Console.ReadLine();
+
+                switch (opcion)
+                {
+                    case "1":
+                        existe = false;
+                        break;
+                    
+                    case "2":
+                        break;
+
+                    default:
+                        Console.WriteLine("¡¡Opción no válida!!");
+                        break;
+                }
+            }
+            existe = false;
             break;
         case "2":
 
