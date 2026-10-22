@@ -1,5 +1,8 @@
-﻿bool salir = false;
+﻿using System.Diagnostics.Contracts;
+
+bool salir = false;
 string nombreFichero = "";
+List<string> registros = File.ReadAllLines("./" + nombreFichero).ToList();
 
 while (!salir)
 {
@@ -44,7 +47,7 @@ while (!salir)
                 
                 Console.WriteLine("¡¡Nombre de archivo ya existente!!");
                 Console.WriteLine();
-                Console.WriteLine("¿Te gustaría indicar otro nombre?");
+                Console.WriteLine("¿Te gustaría asignarle otro nombre?");
                 Console.WriteLine("1. SÍ");
                 Console.WriteLine("2. NO");
                 
@@ -67,7 +70,23 @@ while (!salir)
             existe = false;
             break;
         case "2":
+            Console.WriteLine("Indique en que fichero desea añadir el registro:");
+            nombreFichero = Console.ReadLine();
 
+            if (File.Exists(nombreFichero))
+            {
+                Console.WriteLine("¡¡Perfecto!!");
+                Console.WriteLine("Indique lo que quiere añadir:");
+
+                registros.Add(Console.ReadLine());
+                File.WriteAllLines("./" + nombreFichero, registros);
+
+                Console.WriteLine();
+                Console.WriteLine("Registro añadido correctamente.");
+
+                break;
+            }
+            
             break;
 
         case "3":
