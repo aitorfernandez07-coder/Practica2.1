@@ -2,7 +2,6 @@
 
 bool salir = false;
 string nombreFichero = "";
-List<string> registros = File.ReadAllLines("./" + nombreFichero).ToList();
 
 while (!salir)
 {
@@ -17,7 +16,7 @@ while (!salir)
     Console.WriteLine("6. Cerrar aplicación.");
     Console.WriteLine();
     Console.WriteLine("Seleccione una opción:");
-    string opcion = Console.ReadLine();
+    string opcion = Console.ReadLine() ?? string.Empty;
 
     switch (opcion)
     {
@@ -32,7 +31,7 @@ while (!salir)
             while (!existe)
             {
                 Console.WriteLine("Indique el nombre del fichero:");
-                nombreFichero = Console.ReadLine();
+                nombreFichero = Console.ReadLine() ?? string.Empty;
 
                 if (!File.Exists(@"Datos\" + nombreFichero + ".txt"))
                 {
@@ -51,7 +50,7 @@ while (!salir)
                 Console.WriteLine("1. SÍ");
                 Console.WriteLine("2. NO");
                 
-                opcion = Console.ReadLine();
+                opcion = Console.ReadLine() ?? string.Empty;
 
                 switch (opcion)
                 {
@@ -71,15 +70,16 @@ while (!salir)
             break;
         case "2":
             Console.WriteLine("Indique en que fichero desea añadir el registro:");
-            nombreFichero = Console.ReadLine();
+            nombreFichero = Console.ReadLine() ?? string.Empty;
+            string rutaFichero = Path.Combine("Datos", nombreFichero + ".txt");
 
-            if (File.Exists(nombreFichero))
+            if (File.Exists(rutaFichero))
             {
                 Console.WriteLine("¡¡Perfecto!!");
                 Console.WriteLine("Indique lo que quiere añadir:");
 
-                registros.Add(Console.ReadLine());
-                File.WriteAllLines("./" + nombreFichero, registros);
+                string registro = Console.ReadLine() ?? string.Empty;
+                File.AppendAllLines(rutaFichero, new[] { registro });
 
                 Console.WriteLine();
                 Console.WriteLine("Registro añadido correctamente.");

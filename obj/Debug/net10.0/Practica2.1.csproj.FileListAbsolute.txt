@@ -13,3 +13,7 @@ C:\Users\HP\Desktop\GIT\Practica2.1\obj\Debug\net10.0\refint\Practica2.1.dll
 C:\Users\HP\Desktop\GIT\Practica2.1\obj\Debug\net10.0\Practica2.1.pdb
 C:\Users\HP\Desktop\GIT\Practica2.1\obj\Debug\net10.0\Practica2.1.genruntimeconfig.cache
 C:\Users\HP\Desktop\GIT\Practica2.1\obj\Debug\net10.0\ref\Practica2.1.dll
+C:\Users\HP\AppData\Local\Temp\Practica2.1-validation\Practica2.1.deps.json
+C:\Users\HP\AppData\Local\Temp\Practica2.1-validation\Practica2.1.runtimeconfig.json
+C:\Users\HP\AppData\Local\Temp\Practica2.1-validation\Practica2.1.dll
+C:\Users\HP\AppData\Local\Temp\Practica2.1-validation\Practica2.1.pdb
