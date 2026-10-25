@@ -160,7 +160,7 @@ while (!salir)
 
 string ObtenerRutaFichero()
 {
-    Console.Write("Indique el nombre del fichero (sin .txt): ");
+    Console.Write("Indique el nombre del fichero: ");
     string nombreFichero = (Console.ReadLine() ?? string.Empty).Trim();
 
     if (nombreFichero == string.Empty || nombreFichero.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
