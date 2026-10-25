@@ -1,118 +1,172 @@
-﻿using System.Diagnostics.Contracts;
+﻿bool salir = false;
+string carpetaDatos = "Datos";
 
-bool salir = false;
-string nombreFichero = "";
+Directory.CreateDirectory(carpetaDatos);
 
 while (!salir)
 {
     Console.Clear();
 
-    Console.WriteLine("====MENU DE OPCIONES====");
+    Console.WriteLine("==== MENU DE OPCIONES ====");
     Console.WriteLine("1. Crear nuevo fichero.");
     Console.WriteLine("2. Añadir nuevo registro.");
     Console.WriteLine("3. Eliminar todos los registros.");
     Console.WriteLine("4. Eliminar el fichero.");
-    Console.WriteLine("5. Visualizar registros existentes.");
+    Console.WriteLine("5. Visualizar registros.");
     Console.WriteLine("6. Cerrar aplicación.");
     Console.WriteLine();
-    Console.WriteLine("Seleccione una opción:");
+    Console.Write("Seleccione una opción: ");
     string opcion = Console.ReadLine() ?? string.Empty;
 
     switch (opcion)
     {
         case "1":
-            bool existe = false;
+        {
+            string rutaFichero = ObtenerRutaFichero();
 
-            if (!Directory.Exists(@"Datos"))
+            if (rutaFichero == string.Empty)
             {
-                Directory.CreateDirectory(@"Datos");
+                Console.WriteLine("El nombre del fichero no es válido.");
             }
-            
-            while (!existe)
+            else if (File.Exists(rutaFichero))
             {
-                Console.WriteLine("Indique el nombre del fichero:");
-                nombreFichero = Console.ReadLine() ?? string.Empty;
-
-                if (!File.Exists(@"Datos\" + nombreFichero + ".txt"))
-                {
-                    File.Create(@"Datos\" + nombreFichero + ".txt").Close();
-                    Console.WriteLine();
-                    Console.WriteLine("¡¡Fichero creado correctamente!!");
-
-                    break;
-                } 
-
-                existe = true;
-                
-                Console.WriteLine("¡¡Nombre de archivo ya existente!!");
-                Console.WriteLine();
-                Console.WriteLine("¿Te gustaría asignarle otro nombre?");
-                Console.WriteLine("1. SÍ");
-                Console.WriteLine("2. NO");
-                
-                opcion = Console.ReadLine() ?? string.Empty;
-
-                switch (opcion)
-                {
-                    case "1":
-                        existe = false;
-                        break;
-                    
-                    case "2":
-                        break;
-
-                    default:
-                        Console.WriteLine("¡¡Opción no válida!!");
-                        break;
-                }
+                Console.WriteLine("Ya existe un fichero con ese nombre.");
             }
-            existe = false;
+            else
+            {
+                File.WriteAllText(rutaFichero, string.Empty);
+                Console.WriteLine("Fichero creado correctamente.");
+            }
+
             break;
+        }
+
         case "2":
-            Console.WriteLine("Indique en que fichero desea añadir el registro:");
-            nombreFichero = Console.ReadLine() ?? string.Empty;
-            string rutaFichero = Path.Combine("Datos", nombreFichero + ".txt");
+        {
+            string rutaFichero = ObtenerRutaFichero();
 
-            if (File.Exists(rutaFichero))
+            if (rutaFichero == string.Empty)
             {
-                Console.WriteLine("¡¡Perfecto!!");
-                Console.WriteLine("Indique lo que quiere añadir:");
-
-                string registro = Console.ReadLine() ?? string.Empty;
-                File.AppendAllLines(rutaFichero, new[] { registro });
-
-                Console.WriteLine();
-                Console.WriteLine("Registro añadido correctamente.");
-
-                break;
+                Console.WriteLine("El nombre del fichero no es válido.");
             }
-            
+            else if (!File.Exists(rutaFichero))
+            {
+                Console.WriteLine("No existe un fichero con ese nombre.");
+            }
+            else
+            {
+                Console.Write("Escriba el registro que desea añadir: ");
+                string registro = Console.ReadLine() ?? string.Empty;
+                File.AppendAllText(rutaFichero, registro + Environment.NewLine);
+                Console.WriteLine("Registro añadido correctamente.");
+            }
+
             break;
+        }
 
         case "3":
+        {
+            string rutaFichero = ObtenerRutaFichero();
+
+            if (rutaFichero == string.Empty)
+            {
+                Console.WriteLine("El nombre del fichero no es válido.");
+            }
+            else if (!File.Exists(rutaFichero))
+            {
+                Console.WriteLine("No existe un fichero con ese nombre.");
+            }
+            else
+            {
+                File.WriteAllText(rutaFichero, string.Empty);
+                Console.WriteLine("Se han eliminado todos los registros.");
+            }
 
             break;
+        }
 
         case "4":
+        {
+            string rutaFichero = ObtenerRutaFichero();
+
+            if (rutaFichero == string.Empty)
+            {
+                Console.WriteLine("El nombre del fichero no es válido.");
+            }
+            else if (!File.Exists(rutaFichero))
+            {
+                Console.WriteLine("No existe un fichero con ese nombre.");
+            }
+            else
+            {
+                File.Delete(rutaFichero);
+                Console.WriteLine("Fichero eliminado correctamente.");
+            }
 
             break;
+        }
 
         case "5":
+        {
+            string rutaFichero = ObtenerRutaFichero();
+
+            if (rutaFichero == string.Empty)
+            {
+                Console.WriteLine("El nombre del fichero no es válido.");
+            }
+            else if (!File.Exists(rutaFichero))
+            {
+                Console.WriteLine("No existe un fichero con ese nombre.");
+            }
+            else
+            {
+                string[] registros = File.ReadAllLines(rutaFichero);
+
+                if (registros.Length == 0)
+                {
+                    Console.WriteLine("El fichero no contiene registros.");
+                }
+                else
+                {
+                    Console.WriteLine("Registros del fichero:");
+
+                    for (int i = 0; i < registros.Length; i++)
+                    {
+                        Console.WriteLine($"{i + 1}. {registros[i]}");
+                    }
+                }
+            }
 
             break;
+        }
 
         case "6":
             salir = true;
+            Console.WriteLine("Aplicación cerrada.");
             break;
 
         default:
-            Console.WriteLine("¡¡Opción no válida!!");
+            Console.WriteLine("Opción no válida.");
             break;
     }
 
     if (!salir)
     {
+        Console.WriteLine();
         Console.WriteLine("Pulse una tecla para continuar...");
         Console.ReadKey();
     }
+}
+
+string ObtenerRutaFichero()
+{
+    Console.Write("Indique el nombre del fichero (sin .txt): ");
+    string nombreFichero = (Console.ReadLine() ?? string.Empty).Trim();
+
+    if (nombreFichero == string.Empty || nombreFichero.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+    {
+        return string.Empty;
+    }
+
+    return Path.Combine(carpetaDatos, nombreFichero + ".txt");
 }

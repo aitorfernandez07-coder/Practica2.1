@@ -11,6 +11,13 @@ Todas estas opciones, se presentarán al usuario a través de un menú como el q
 5. Visualizar los registros.
 6. Cerrar la aplicación.
 La forma de hacerlo es totalmente libre, podéis usar la programación orientada a objetos o hacer simples scripts.
+
+## Uso del programa
+
+Al ejecutar la aplicación, aparece un menú para crear ficheros, añadir registros, vaciar o eliminar un fichero y visualizar sus registros. Los ficheros se guardan en la carpeta `Datos` y cada registro ocupa una línea.
+
+Cuando el programa solicite el nombre del fichero, se debe escribir sin la extensión `.txt`. Por ejemplo, al indicar `clientes`, se utilizará `Datos/clientes.txt`.
+
 Entrega (IMPORTANTE)
 Me vais a tener que entregar este trabajo de dos formas distintas:
 ● El link del repositorio de GitHub donde vais a subir vuestro código.
